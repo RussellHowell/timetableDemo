@@ -1,6 +1,5 @@
 import java.text.DecimalFormat;
 
-
 public class Shuttle {
 	
 protected static int Departure;
@@ -18,9 +17,9 @@ protected static String Result_String;
 		
 		shuttleTimes shuttle_info = new shuttleTimes();
 		
-		findTrip(start_loc, end_loc, time_int, shuttle_info);
+		findTrip(start_loc, end_loc, time_int, shuttle_info);	
 		
-		formatOutput(Arrival, Departure);
+		formatOutput();
 		
 	}
 	
@@ -30,13 +29,16 @@ protected static String Result_String;
 		
 	}
 
-	private void formatOutput(int arrival2, int departure2) {
-		String arrival_string = Integer.toString(arrival2);
-		String departure_string = Integer.toString(departure2);
+	private void formatOutput() {
+							
+								//Concatenate a zero for following substrings to work correctly
+		String arrival_string = Integer.toString(Arrival);
+		String departure_string =Integer.toString(Departure);
 		
 		int arrival_sub = Integer.parseInt(arrival_string.substring(0,2)); //Integer Holding first 2 digits of time
 		int departure_sub = Integer.parseInt(departure_string.substring(0,2));
 		
+		System.out.println(arrival_sub);
 		
 		//Convert back to 12 hr time
 		String arrival_meridiem, departure_meridiem;
@@ -146,11 +148,10 @@ protected static String Result_String;
 	private static int findInArray(int time_int, int[] timeArray) {
 		int i = 0;
 		int result=0;
-		
+		System.out.println(time_int);
 		//Increment index
 		outerloop:
 		while(i<= timeArray.length + 1){
-			
 			if(timeArray[i]>time_int){
 				result = timeArray[i-1];
 				break outerloop;
@@ -200,7 +201,7 @@ protected static String Result_String;
 				
 			arrive_before=Integer.parseInt(time_string);
 				
-			}else if(Meridiem == 1 && arrive_before < 3000){
+			}else if(Meridiem == 1 && arrive_before < 300){
 
 				String substring = time_string.substring(0,2);
 				
