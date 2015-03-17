@@ -25,8 +25,6 @@ protected static String Result_String;
 		
 		int time_int = formatTime(time_string);
 		
-		System.out.println("time_int: " + time_int);
-		
 		shuttleTimes shuttle_info = new shuttleTimes();
 		
 		findTrip(start_loc, end_loc, time_int, shuttle_info);
@@ -87,8 +85,6 @@ protected static String Result_String;
 			}
 		}else
 			departure_meridiem = "PM";
-		
-	System.out.println(arrival_sub + "   " + departure_sub);
 		
 		arrival_string =  arrival_sub + ":" + arrival_string + " " + arrival_meridiem;
 		departure_string =  departure_sub + ":" + departure_string + " " + departure_meridiem;
