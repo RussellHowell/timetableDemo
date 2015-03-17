@@ -8,11 +8,8 @@
 //************************************//
 
 
-<<<<<<< HEAD
 import java.text.DecimalFormat;
 
-=======
->>>>>>> 78bfb557efe0610bb253f110195547b699c097c0
 public class Shuttle {
 	
 protected static int Departure;
@@ -32,7 +29,7 @@ protected static String Result_String;
 		
 		shuttleTimes shuttle_info = new shuttleTimes();
 		
-		findTrip(start_loc, end_loc, time_int, shuttle_info);	
+		findTrip(start_loc, end_loc, time_int, shuttle_info);
 		
 		formatOutput();
 		
@@ -45,22 +42,10 @@ protected static String Result_String;
 	}
 
 	private void formatOutput() {
-<<<<<<< HEAD
 		String arrival_string = Integer.toString(Arrival);
 		String departure_string = Integer.toString(Departure);
 		
 		int arrival_sub, departure_sub; //these values hold the the digits of the time before the colon in for the arrival and departure time
-=======
-							
-								//Concatenate a zero for following substrings to work correctly
-		String arrival_string = Integer.toString(Arrival);
-		String departure_string =Integer.toString(Departure);
-		
-		int arrival_sub = Integer.parseInt(arrival_string.substring(0,2)); //Integer Holding first 2 digits of time
-		int departure_sub = Integer.parseInt(departure_string.substring(0,2));
-		
-		System.out.println(arrival_sub);
->>>>>>> 78bfb557efe0610bb253f110195547b699c097c0
 		
 		if (Arrival < 1000){ 		//A problem occurs if the number before the colon is only one digit, (example being the '9' in '9:30' 
 			arrival_sub = Integer.parseInt(arrival_string.substring(0,1));		//these conditionals take care of that case by changing the index
@@ -186,16 +171,12 @@ protected static String Result_String;
 	private static int findInArray(int time_int, int[] timeArray) {
 		int i = 0;
 		int result=0;
-<<<<<<< HEAD
 		
 		
 	try{
-=======
-		System.out.println(time_int);
-		//Increment index
->>>>>>> 78bfb557efe0610bb253f110195547b699c097c0
 		outerloop:
 		while(i<= timeArray.length + 1){
+			
 			if(timeArray[i]>time_int){
 				result = timeArray[i-1];
 				break outerloop;
