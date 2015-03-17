@@ -1,5 +1,14 @@
-import java.text.DecimalFormat;
+//Created by Russell Howell
+//Last Modified 3/17/2015
+//************************************//
+//									  //
+//	Helper class holding methods	  //
+// for the Timetable.java driver class//
+//									  //
+//************************************//
 
+
+import java.text.DecimalFormat;
 
 public class Shuttle {
 	
@@ -16,11 +25,13 @@ protected static String Result_String;
 		
 		int time_int = formatTime(time_string);
 		
+		System.out.println("time_int: " + time_int);
+		
 		shuttleTimes shuttle_info = new shuttleTimes();
 		
 		findTrip(start_loc, end_loc, time_int, shuttle_info);
 		
-		formatOutput(Arrival, Departure);
+		formatOutput();
 		
 	}
 	
@@ -30,14 +41,25 @@ protected static String Result_String;
 		
 	}
 
-	private void formatOutput(int arrival2, int departure2) {
-		String arrival_string = Integer.toString(arrival2);
-		String departure_string = Integer.toString(departure2);
+	private void formatOutput() {
+		String arrival_string = Integer.toString(Arrival);
+		String departure_string = Integer.toString(Departure);
 		
-		int arrival_sub = Integer.parseInt(arrival_string.substring(0,2)); //Integer Holding first 2 digits of time
-		int departure_sub = Integer.parseInt(departure_string.substring(0,2));
+		int arrival_sub, departure_sub; //these values hold the the digits of the time before the colon in for the arrival and departure time
 		
-		
+		if (Arrival < 1000){ 		//A problem occurs if the number before the colon is only one digit, (example being the '9' in '9:30' 
+			arrival_sub = Integer.parseInt(arrival_string.substring(0,1));		//these conditionals take care of that case by changing the index
+			arrival_string = arrival_string.substring(1);						//of the substring if necessary
+			}else{arrival_sub = Integer.parseInt(arrival_string.substring(0,2));
+				 arrival_string = arrival_string.substring(2);
+						 } 		
+		if (Departure < 1000){															
+			departure_sub = Integer.parseInt(departure_string.substring(0,1));	
+		departure_string = departure_string.substring(1);
+			}else{departure_sub = Integer.parseInt(departure_string.substring(0,2));
+				departure_string= departure_string.substring(2);}	
+																					
+			
 		//Convert back to 12 hr time
 		String arrival_meridiem, departure_meridiem;
 		if(arrival_sub < 12){
@@ -48,6 +70,7 @@ protected static String Result_String;
 			if (arrival_sub>=12 && Meridiem == 1){ //check if the time is after midnight
 				arrival_sub = arrival_sub-12;
 				arrival_meridiem = "AM";
+				if(arrival_sub == 0){arrival_sub=12;}		
 			}
 		}else
 			arrival_meridiem = "PM";
@@ -60,13 +83,15 @@ protected static String Result_String;
 			if (departure_sub>=12 && Meridiem == 1){ //check if the time is after midnight
 				departure_sub = departure_sub-12;
 				departure_meridiem = "AM";
+				if(departure_sub == 0){departure_sub=12;}
 			}
 		}else
 			departure_meridiem = "PM";
 		
+	System.out.println(arrival_sub + "   " + departure_sub);
 		
-		arrival_string =  Integer.toString(arrival_sub) + ":" + arrival_string.substring(2, 4) + " " + arrival_meridiem;
-		departure_string =  Integer.toString(departure_sub) + ":" + departure_string.substring(2, 4) + " " + departure_meridiem;
+		arrival_string =  arrival_sub + ":" + arrival_string + " " + arrival_meridiem;
+		departure_string =  departure_sub + ":" + departure_string + " " + departure_meridiem;
 		
 		Result_String = "Departing from " + Departure_String + " at: " + departure_string + "\nArrival at " + Arrival_String + ": " + arrival_string;
 		
@@ -147,7 +172,8 @@ protected static String Result_String;
 		int i = 0;
 		int result=0;
 		
-		//Increment index
+		
+	try{
 		outerloop:
 		while(i<= timeArray.length + 1){
 			
@@ -164,6 +190,9 @@ protected static String Result_String;
 			}//end of if - else
 			++i;
 		}//end of while loop
+	}catch(Exception e){System.out.println("Sorry, no availible trips could be found for the time specified");
+						System.exit(2);}
+	
 		return result;
 	}
 
@@ -177,14 +206,14 @@ protected static String Result_String;
 		//Convert back to string and keep formatting (leading 0)
 		DecimalFormat IntForm = new DecimalFormat("0000");
 		time_string = IntForm.format(arrive_before); 
-	
+		
 		//Check if the entered time is of the right format
 		if(time_string.length()<4||time_string.length()>5){ //length
-			System.out.println("ERROR: Make sure you enter the time in the format hh:mm");
+			System.err.println("ERROR: Make sure you enter the time in the format hh:mm");
 			System.exit(0);
 		} else if((Integer.parseInt(time_string.substring(2, 4))>=60)||
 				Integer.parseInt(time_string.substring(0,2))>12){ 
-			System.out.println("ERROR: You entered an invalid time");
+			System.err.println("ERROR: You entered an invalid time");
 			System.exit(0);
 		}
 		
@@ -200,7 +229,7 @@ protected static String Result_String;
 				
 			arrive_before=Integer.parseInt(time_string);
 				
-			}else if(Meridiem == 1 && arrive_before < 3000){
+			}else if(Meridiem == 1 && arrive_before < 300){
 
 				String substring = time_string.substring(0,2);
 				
@@ -212,9 +241,11 @@ protected static String Result_String;
 					else{
 						hour = 24 + hour;
 					}
+				
 				substring = Integer.toString(hour);
 				time_string= substring.concat(time_string.substring(2,4));
 				arrive_before = Integer.parseInt(time_string);
+				
 			}
 		
 		return arrive_before;

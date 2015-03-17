@@ -3,6 +3,7 @@ final class shuttleTimes {
 
 	//Shuttle Time Information
 	//Note: Numbers greater than 2400 are simply times after midnight
+	
 			int[] southCampus = {810,830,850,910,930,950,1010,1030,1050,1110,1130,1150,
 					1230,1250,1310,1330,1350,1410,1430,1450,1510,1530,1550,1610,1630,1650,
 					1710,1730,1750,1810,1830,1850,1910,1930,1950,2010,2030,2050,
